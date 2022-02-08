@@ -63,7 +63,7 @@ public class SancionController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		sancionT.get().setCliente( sancion_det.getCliente() );
+		//sancionT.get().setCliente( sancion_det.getCliente() );
 		sancionT.get().setCodalq(sancion_det.getCodalq() );
 		sancionT.get().setTiposancion( sancion_det.getTiposancion());
 		sancionT.get().setNumdias(sancion_det.getNumdias() );

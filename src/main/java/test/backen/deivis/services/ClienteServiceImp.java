@@ -2,6 +2,7 @@ package test.backen.deivis.services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,17 +14,18 @@ import test.backen.deivis.repository.ClienteRepository;
 @Service
 public class ClienteServiceImp implements ClienteService {
 	
+	@Autowired
 	ClienteRepository clienteRepository;
 
 	@Override
 	public Iterable<Cliente> findAll() {
-		// TODO Auto-generated method stub
+		
 		return clienteRepository.findAll();
 	}
 
 	@Override
 	public Page<Cliente> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
+		
 		return clienteRepository.findAll(pageable);
 	}
 

@@ -4,7 +4,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-
+import test.backen.deivis.dto.DetalleAlquilerDto;
 import test.backen.deivis.entity.DetalleAlquiler;
 
 public interface DetalleAlquilerService {
@@ -15,7 +15,7 @@ public interface DetalleAlquilerService {
 	
 	public Optional<DetalleAlquiler> findById(Long item);  //buscar 
 	
-	public DetalleAlquiler save(DetalleAlquiler detalleAlquiler);  //crear y actualizar
+	public DetalleAlquiler save(DetalleAlquilerDto detalleAlquiler);  //crear y actualizar
 	
 	public void deleteById(Long item); //eliminar
 

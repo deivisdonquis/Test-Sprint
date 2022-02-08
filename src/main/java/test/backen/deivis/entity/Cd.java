@@ -34,22 +34,26 @@ public class Cd implements Serializable {
 	private Boolean estado; //1-activo 0-inactivo
 	
 	
-	@OneToMany(mappedBy = "cd")
-    private List<DetalleAlquiler> alquileres;
+	//@OneToMany(mappedBy = "cd")
+   // private List<DetalleAlquiler> alquileres;
 	
 	
 	/////////////////////////////////////////////////////////
 	
 	
 	
-	public List<DetalleAlquiler> getAlquileres() {
+	/*public List<DetalleAlquiler> getAlquileres() {
 		return alquileres;
 	}
-
+	
 	public void setAlquileres(List<DetalleAlquiler> alquileres) {
 		this.alquileres = alquileres;
 	}
 
+	
+	*/
+
+	
 	
 
 

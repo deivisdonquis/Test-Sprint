@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,19 +26,21 @@ public class Alquiler implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codalq;
-		
-	private Date fecha;
+	
+	@Column(length = 10)
+	private String fecha;
 	
 	private Integer valor;
 		
-	//@ManyToOne
-    //@JoinColumn(name = "codcli", nullable = false)
-    //private Cliente cliente;
+	@ManyToOne( fetch= FetchType.LAZY )
+    @JoinColumn(name = "codcli", nullable=false )
+     private Cliente cliente;
 
 	
 	//relacion uno a muchos con detallealquiler
-	//@OneToMany(mappedBy = "alquiler")
+	//@OneToMany(mappedBy = "alquiler", fetch= FetchType.LAZY )
     //private List<DetalleAlquiler> detalleAlquilers;
+	
 
 	//////////////////////////////////
 	
@@ -45,12 +48,47 @@ public class Alquiler implements Serializable {
 		super();
 	}
 	
-	public Alquiler(Date fecha, Integer valor, Cliente cliente) {
+	
+
+
+
+public Alquiler(String fecha, Integer valor, Cliente cliente) {
 		super();
 		this.fecha = fecha;
 		this.valor = valor;
-		//this.cliente = cliente;
+		this.cliente = cliente;
 	}
+
+
+
+
+
+public Cliente getCliente() {
+		return cliente;
+	}
+
+
+
+
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+
+
+
+
+public Alquiler(String fecha, Integer valor) {
+		super();
+		this.fecha = fecha;
+		this.valor = valor;
+		
+	}
+
+
+
+
 
 /*
 
@@ -62,15 +100,31 @@ public class Alquiler implements Serializable {
 
 	public void setDetalleAlquilers(List<DetalleAlquiler> detalleAlquilers) {
 		this.detalleAlquilers = detalleAlquilers;
-	}*/
+	}
 
-	/*public Cliente getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}*/
+
+	public String getFecha() {
+		return fecha;
+	}
+
+
+
+	
+
+
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+
 
 	public Long getCodalq() {
 		return codalq;
@@ -80,13 +134,7 @@ public class Alquiler implements Serializable {
 
 	
 
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+	
 
 	public Integer getValor() {
 		return valor;

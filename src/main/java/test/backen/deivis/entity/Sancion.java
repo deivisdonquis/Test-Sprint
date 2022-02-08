@@ -31,16 +31,17 @@ public class Sancion implements Serializable {
 	
 	private Integer montosans;
 	
-	@ManyToOne
+	/*//@ManyToOne
     @JoinColumn(name = "codcli")
     private Cliente cliente;
-	
+	*/
 	////////////////////////////////////////////
 
 	public Long getCodsan() {
 		return codsan;
 	}
 
+	/*
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -48,7 +49,7 @@ public class Sancion implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
+*/
 	public void setCodsan(Long codsan) {
 		this.codsan = codsan;
 	}

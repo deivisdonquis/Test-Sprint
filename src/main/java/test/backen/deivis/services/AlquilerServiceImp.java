@@ -52,9 +52,9 @@ public class AlquilerServiceImp implements AlquilerService {
 			Alquiler  alquiler = new Alquiler();
 			alquiler.setFecha( alq.getFecha() );
 			alquiler.setValor( alq.getValor() );
-			//alquiler.setCliente(Ct.get()); alquiler.setCliente(Ct);
+			alquiler.setCliente(Ct.get()); //alquiler.setCliente(Ct);
 			
-			return alquilerRepository.save(alquiler);
+			return alquilerRepository.save( alquiler );
 				
 		}
 		else

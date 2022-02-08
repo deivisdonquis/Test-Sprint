@@ -2,18 +2,28 @@ package test.backen.deivis.services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import test.backen.deivis.dto.DetalleAlquilerDto;
+import test.backen.deivis.entity.Alquiler;
+import test.backen.deivis.entity.Cliente;
 import test.backen.deivis.entity.DetalleAlquiler;
+import test.backen.deivis.repository.AlquilerRepository;
+import test.backen.deivis.repository.ClienteRepository;
 import test.backen.deivis.repository.DetalleAlquilerRepository;
 
 
 @Service
 public class DetalleAlquilerServiceImp  implements  DetalleAlquilerService{
 	
+	@Autowired
 	DetalleAlquilerRepository detalleAlquilerRepository;
+	
+	@Autowired
+	AlquilerRepository alquilerRepository;
 
 	@Override
 	public Iterable<DetalleAlquiler> findAll() {
@@ -34,9 +44,25 @@ public class DetalleAlquilerServiceImp  implements  DetalleAlquilerService{
 	}
 
 	@Override
-	public DetalleAlquiler save(DetalleAlquiler detalleAlquiler) {
+	public DetalleAlquiler save(DetalleAlquilerDto Al) {
 		// TODO Auto-generated method stub
-		return detalleAlquilerRepository.save(detalleAlquiler);
+		
+		Optional<Alquiler> At = alquilerRepository.findById( Al.getCodalq() );
+		if(At.isPresent())  
+		{
+			DetalleAlquiler  detalleAlquiler = new DetalleAlquiler();
+			
+			detalleAlquiler.setDiasprestamo( Al.getDiasprestamo() );
+			detalleAlquiler.setFechadev(Al.getFechadev() );
+			detalleAlquiler.setCodalq(Al.getCodalq());
+			detalleAlquiler.setCodcd(Al.getCodcd());  //me falto vaidar esta relacion
+			
+			return detalleAlquilerRepository.save( detalleAlquiler );
+		}
+		else
+			return null;
+		
+		
 	}
 
 	@Override

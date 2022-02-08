@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import test.backen.deivis.dto.DetalleAlquilerDto;
 import test.backen.deivis.entity.DetalleAlquiler;
 import test.backen.deivis.services.DetalleAlquilerService;
 
@@ -29,7 +30,7 @@ public class DetalleAlquilerController {
 	
 	//metodo para crear
 	@PostMapping
-	public ResponseEntity<?> crear(@RequestBody DetalleAlquiler detalleAlquilers)
+	public ResponseEntity<?> crear(@RequestBody DetalleAlquilerDto detalleAlquilers)
 	{
 		//haver metodo para verificar si existe el maestro
 		return ResponseEntity.status(HttpStatus.CREATED).body(detalleAlquilerService.save(detalleAlquilers));
@@ -53,7 +54,7 @@ public class DetalleAlquilerController {
 	
 	//metodo para actualizar
 	@PutMapping("/{id}")
-	public ResponseEntity<?> actualizar(@RequestBody DetalleAlquiler detalleAlquiler_det, @PathVariable(value="id") Long id )
+	public ResponseEntity<?> actualizar(@RequestBody DetalleAlquilerDto detalleAlquiler_det, @PathVariable(value="id") Long id )
 	{
 		Optional<DetalleAlquiler> detalleAlquilerT = detalleAlquilerService.findById(id);
 		
@@ -62,12 +63,7 @@ public class DetalleAlquilerController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		detalleAlquilerT.get().setAlquiler(       detalleAlquiler_det.getAlquiler() );
-		detalleAlquilerT.get().setCd(        detalleAlquiler_det.getCd() );
-		detalleAlquilerT.get().setDiasprestamo( detalleAlquiler_det.getDiasprestamo() );
-		detalleAlquilerT.get().setFechadev(     detalleAlquiler_det.getFechadev() );
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(detalleAlquilerService.save(detalleAlquilerT.get()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(detalleAlquilerService.save(detalleAlquiler_det));
 		
 	}
 	

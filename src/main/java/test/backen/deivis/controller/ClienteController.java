@@ -65,14 +65,14 @@ public class ClienteController {
 		}
 		
 		clienteT.get().setNombre(cliente_det.getNombre() );
-		/*clienteT.get().setDireccion(cliente_det.getDireccion() );
+		clienteT.get().setDireccion(cliente_det.getDireccion() );
 		clienteT.get().setTemaint( cliente_det.getTemaint()  );
 		clienteT.get().setTelefono( cliente_det.getTelefono() );
 		clienteT.get().setEmail( cliente_det.getEmail() );
 		clienteT.get().setNdni( cliente_det.getNdni() );
 		clienteT.get().setFechan( cliente_det.getFechan() );
 		clienteT.get().setFechai( cliente_det.getFechai() );
-		clienteT.get().setEstado( cliente_det.getEstado() );*/
+		clienteT.get().setEstado( cliente_det.getEstado() );
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(clienteT.get()));
 		
