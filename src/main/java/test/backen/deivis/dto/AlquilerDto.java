@@ -1,0 +1,60 @@
+package test.backen.deivis.dto;
+
+import java.io.Serializable;
+import java.util.Date;
+
+
+public class AlquilerDto implements Serializable {
+	
+	private static final long serialVersionUID = -7610451946672093872L;
+	private Long codalq;
+	private Date fecha;
+	private Integer valor;
+	private Long codcli;
+	
+
+	public AlquilerDto(Long codalq, Date fecha, Integer valor, Long codcli) {
+		super();
+		this.codalq = codalq;
+		this.fecha = fecha;
+		this.valor = valor;
+		this.codcli = codcli;
+	}
+
+	public Long getCodalq() {
+		return codalq;
+	}
+
+	public void setCodalq(Long codalq) {
+		this.codalq = codalq;
+	}
+
+	
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Integer getValor() {
+		return valor;
+	}
+
+	public void setValor(Integer valor) {
+		this.valor = valor;
+	}
+
+	public Long getCodcli() {
+		return codcli;
+	}
+
+	public void setCodcli(Long codcli) {
+		this.codcli = codcli;
+	}
+	
+	
+
+}
