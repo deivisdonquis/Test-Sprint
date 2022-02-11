@@ -1,0 +1,62 @@
+--Crear un procedimiento almacenado en Oracle que se encargue del calculo de la sanción por retraso en el alquiler
+-- el procedimiento debe sancionar a todos los clientes con una multa de 500 pesos por día de retraso
+
+******************************************************
+*FUNCION PARA EL CALCULO DE DIAS ENTRE UNA FECHA Y OTRA
+********************************************************
+
+CREATE OR REPLACE FUNCTION days(p_from_date IN DATE, p_to_date IN DATE) RETURN NUMBER IS b_days NUMBER;
+BEGIN
+
+  b_days := TRUNC(p_to_date) - TRUNC(p_from_date) - ((TRUNC(p_to_date,'D')-TRUNC(to_date(p_from_date),'D'))/7)*2 + 1;
+
+  IF TO_CHAR(p_to_date,'D') = '7' THEN
+    b_days := b_days - 1;
+  END IF;
+
+  IF TO_CHAR(p_from_date,'D') = '1' THEN
+    b_days := b_days - 1;
+  END IF;
+
+  RETURN(b_days);
+
+END;
+
+
+***********************************************
+*PROCEDIMIENTO PARA EL CALCULO DE LA SANCION 
+***********************************************
+
+
+CREATE OR REPLACE PROCEDURE  SANCION as
+DECLARE
+ CURSOR cu_detallealquiler IS 
+ SELECT codalq, fechadev, days(  to_date(to_char(fechadev ,'dd/mm/yyyy')) ,  to_date(to_char(sysdate,'dd/mm/yyyy'))  ) as dias
+ FROM detallealquiler WHERE days(  to_date(to_char(fechadev ,'dd/mm/yyyy')) ,  to_date(to_char(sysdate,'dd/mm/yyyy'))  )>=1;
+
+  v_registro  cu_detallealquiler%rowtype;
+  cliente alquiler.codcli%type;
+   
+ BEGIN
+  OPEN cu_detallealquiler;
+  LOOP
+    FETCH cu_detallealquiler INTO v_registro;
+    EXIT WHEN cu_detallealquiler%notfound;
+    
+     SELECT codcli INTO cliente FROM alquiler WHERE codalq=v_registro.codalq;
+     
+    --dbms_output.put_line('alquiler ' || v_registro.codalq || ' dias ' || v_registro.dias || 'cliente ' || cliente  ); 
+    
+    DELETE FROM sancion WHERE codalq= v_registro.codalq AND codcli=cliente;
+    
+    INSERT INTO sancion (codalq,montosans,numdias,tiposancion,codcli)
+    VALUES (v_registro.codalq,500*v_registro.dias,v_registro.dias,'Sancionado por moroso',cliente );
+    
+   END LOOP;
+   
+   CLOSE cu_detallealquiler;
+   
+ END SANCION;
+
+ *******************************************************
+
