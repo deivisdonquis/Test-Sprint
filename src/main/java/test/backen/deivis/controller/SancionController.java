@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import test.backen.deivis.dto.SancionDto;
 import test.backen.deivis.entity.Sancion;
 import test.backen.deivis.services.SancionService;
 
@@ -30,7 +31,7 @@ public class SancionController {
 	
 	//metodo para crear
 	@PostMapping
-	public ResponseEntity<?> crear(@RequestBody Sancion sancion)
+	public ResponseEntity<?> crear(@RequestBody SancionDto sancion)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(sancionService.save(sancion));
 		
@@ -54,7 +55,7 @@ public class SancionController {
 	
 	//metodo para actualizar
 	@PutMapping("/{id}")
-	public ResponseEntity<?> actualizar(@RequestBody Sancion sancion_det, @PathVariable(value="id") Long id )
+	public ResponseEntity<?> actualizar(@RequestBody SancionDto sancion_det, @PathVariable(value="id") Long id )
 	{
 		Optional<Sancion> sancionT = sancionService.findById(id);
 		
@@ -63,13 +64,8 @@ public class SancionController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		//sancionT.get().setCliente( sancion_det.getCliente() );
-		sancionT.get().setCodalq(sancion_det.getCodalq() );
-		sancionT.get().setTiposancion( sancion_det.getTiposancion());
-		sancionT.get().setNumdias(sancion_det.getNumdias() );
-		sancionT.get().setMontosans(sancion_det.getMontosans() );
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(sancionService.save(sancionT.get()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(sancionService.save( sancion_det ));
 		
 	}
 	

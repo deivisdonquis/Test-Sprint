@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import test.backen.deivis.dto.DetalleAlquilerDto;
 import test.backen.deivis.entity.Alquiler;
+import test.backen.deivis.entity.Cd;
 import test.backen.deivis.entity.Cliente;
 import test.backen.deivis.entity.DetalleAlquiler;
 import test.backen.deivis.repository.AlquilerRepository;
+import test.backen.deivis.repository.CdRepository;
 import test.backen.deivis.repository.ClienteRepository;
 import test.backen.deivis.repository.DetalleAlquilerRepository;
 
@@ -24,6 +26,9 @@ public class DetalleAlquilerServiceImp  implements  DetalleAlquilerService{
 	
 	@Autowired
 	AlquilerRepository alquilerRepository;
+	
+	@Autowired
+	CdRepository cdRepository;
 
 	@Override
 	public Iterable<DetalleAlquiler> findAll() {
@@ -47,17 +52,29 @@ public class DetalleAlquilerServiceImp  implements  DetalleAlquilerService{
 	public DetalleAlquiler save(DetalleAlquilerDto Al) {
 		// TODO Auto-generated method stub
 		
+		//verificando si tiene datos en la tabla maestra Alquiler
 		Optional<Alquiler> At = alquilerRepository.findById( Al.getCodalq() );
+		
 		if(At.isPresent())  
 		{
-			DetalleAlquiler  detalleAlquiler = new DetalleAlquiler();
+			//Verificando si el CD es valido
+			Optional<Cd> Cdt = cdRepository.findById( Al.getCodcd() );
 			
-			detalleAlquiler.setDiasprestamo( Al.getDiasprestamo() );
-			detalleAlquiler.setFechadev(Al.getFechadev() );
-			detalleAlquiler.setCodalq(Al.getCodalq());
-			detalleAlquiler.setCodcd(Al.getCodcd());  //me falto vaidar esta relacion
+			if(Cdt.isPresent())  
+			{
+				DetalleAlquiler  detalleAlquiler = new DetalleAlquiler();
+				detalleAlquiler.setAlquiler( At.get() );
+				detalleAlquiler.setCd( Cdt.get() );
+				detalleAlquiler.setFechadev(Al.getFechadev() );
+				detalleAlquiler.setDiasprestamo( Al.getDiasprestamo() );
+				
+				return detalleAlquilerRepository.save( detalleAlquiler );
+			}
+			else
+				return null;
+				
 			
-			return detalleAlquilerRepository.save( detalleAlquiler );
+			
 		}
 		else
 			return null;

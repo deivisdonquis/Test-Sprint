@@ -23,7 +23,13 @@ public class AlquilerServiceImp implements AlquilerService {
 	
 	@Autowired
 	ClienteRepository clienteRepository;
-
+	
+	@Override
+	public int CobrarAlquiler()
+	{
+		return alquilerRepository.CobrarAlquiler();
+	}
+	
 	@Override
 	public Iterable<Alquiler> findAll() {
 		// TODO Auto-generated method stub

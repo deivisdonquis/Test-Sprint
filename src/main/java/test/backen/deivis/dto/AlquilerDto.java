@@ -8,7 +8,7 @@ public class AlquilerDto implements Serializable {
 	
 	private static final long serialVersionUID = -7610451946672093872L;
 	private Long codalq;
-	private String fecha;
+	private Date fecha;
 	private Integer valor;
 	private Long codcli;
 	private Long codcd;
@@ -22,7 +22,7 @@ public class AlquilerDto implements Serializable {
 		this.codcd = codcd;
 	}
 
-	public AlquilerDto(Long codalq, String fecha, Integer valor, Long codcli) {
+	public AlquilerDto(Long codalq, Date fecha, Integer valor, Long codcli) {
 		super();
 		this.codalq = codalq;
 		this.fecha = fecha;
@@ -40,11 +40,11 @@ public class AlquilerDto implements Serializable {
 
 	
 
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 

@@ -10,59 +10,101 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="sancion")
 public class Sancion implements Serializable {
 
-	private static final long serialVersionUID = 4168960819093253507L;
 	
+	private static final long serialVersionUID = 4039296428859933650L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codsan;
-	
-	private Long codalq;
 	
 	@Column(length = 30)
 	private String tiposancion;
 	
 	private Integer numdias;
 	
-	private Integer montosans;
+	private Integer montosan;
 	
-	/*//@ManyToOne
-    @JoinColumn(name = "codcli")
-    private Cliente cliente;
-	*/
+	@OneToOne
+	@JoinColumn(name="codalq", unique = true)
+	private Alquiler alquiler;
+	
+	@ManyToOne
+	@JoinColumn(name="codcli")
+	private Cliente cliente;
+	  
 	////////////////////////////////////////////
 
-	public Long getCodsan() {
-		return codsan;
+	public Sancion()
+	{
+		super();
+		
+	}
+	
+	
+	
+
+	public Sancion(String tiposancion, Integer numdias, Integer montosans, Alquiler alquiler, Cliente cliente) {
+		super();
+		this.tiposancion = tiposancion;
+		this.numdias = numdias;
+		this.montosan = montosans;
+		this.alquiler = alquiler;
+		this.cliente = cliente;
 	}
 
-	/*
+
+
+
 	public Cliente getCliente() {
 		return cliente;
 	}
 
+
+
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-*/
+
+
+
+
+	public Alquiler getAlquiler() {
+		return alquiler;
+	}
+
+
+
+
+	public void setAlquiler(Alquiler alquiler) {
+		this.alquiler = alquiler;
+	}
+
+
+
+	
+	
+	
+	public Long getCodsan() {
+		return codsan;
+	}
+
 	public void setCodsan(Long codsan) {
 		this.codsan = codsan;
 	}
 
-	
 
-	public Long getCodalq() {
-		return codalq;
-	}
 
-	public void setCodalq(Long codalq) {
-		this.codalq = codalq;
-	}
+
+
+
 
 	public String getTiposancion() {
 		return tiposancion;
@@ -81,11 +123,11 @@ public class Sancion implements Serializable {
 	}
 
 	public Integer getMontosans() {
-		return montosans;
+		return montosan;
 	}
 
 	public void setMontosans(Integer montosans) {
-		this.montosans = montosans;
+		this.montosan = montosan;
 	}
 	
 	

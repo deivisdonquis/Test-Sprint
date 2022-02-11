@@ -15,7 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name="alquiler")
@@ -27,114 +33,70 @@ public class Alquiler implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codalq;
 	
-	@Column(length = 10)
-	private String fecha;
+	@Temporal(TemporalType.DATE )
+	@DateTimeFormat(iso = ISO.DATE)
+	@Column(name="fecha")
+	private Date fecha;
 	
 	private Integer valor;
 		
-	@ManyToOne( fetch= FetchType.LAZY )
+	@ManyToOne
     @JoinColumn(name = "codcli", nullable=false )
-     private Cliente cliente;
-
+    private Cliente cliente;
 	
 	//relacion uno a muchos con detallealquiler
-	//@OneToMany(mappedBy = "alquiler", fetch= FetchType.LAZY )
-    //private List<DetalleAlquiler> detalleAlquilers;
+	@OneToMany(mappedBy = "alquiler" )
+    private List<DetalleAlquiler> detalleAlquilers;
 	
-
 	//////////////////////////////////
 	
 	public Alquiler() {
 		super();
 	}
 	
-	
-
-
-
-public Alquiler(String fecha, Integer valor, Cliente cliente) {
+	public Alquiler(Date fecha, Integer valor, Cliente cliente) {
 		super();
 		this.fecha = fecha;
 		this.valor = valor;
 		this.cliente = cliente;
 	}
-
-
-
-
-
-public Cliente getCliente() {
-		return cliente;
-	}
-
-
-
-
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-
-
-
-
-public Alquiler(String fecha, Integer valor) {
+	
+	public Alquiler(Date fecha, Integer valor) {
 		super();
 		this.fecha = fecha;
 		this.valor = valor;
 		
 	}
 
-
-
-
-
-/*
-
-	public List<DetalleAlquiler> getDetalleAlquilers() {
-		return detalleAlquilers;
-	}
-
-	
-
-	public void setDetalleAlquilers(List<DetalleAlquiler> detalleAlquilers) {
-		this.detalleAlquilers = detalleAlquilers;
+	public void setCodalq(Long codalq) {
+		this.codalq = codalq;
 	}
 
 	public Cliente getCliente() {
 		return cliente;
 	}
 
+
+	public List<DetalleAlquiler> getDetalleAlquilers() {
+	return detalleAlquilers;
+	}
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}*/
+	}
 
-	public String getFecha() {
+
+	public Date getFecha() {
 		return fecha;
 	}
 
-
-
-	
-
-
-
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-
-
 
 	public Long getCodalq() {
 		return codalq;
 	}
-
-
-
-	
-
-	
 
 	public Integer getValor() {
 		return valor;
@@ -143,9 +105,5 @@ public Alquiler(String fecha, Integer valor) {
 	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
-	
-	
-	
-	
 
 }

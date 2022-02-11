@@ -29,6 +29,14 @@ public class AlquilerController {
 	@Autowired
 	private AlquilerService alquilerService;
 	
+		//metodo para ejecutar el procedimiento almacenado en la DB
+		@PostMapping("cobrar-alquiler")
+		public ResponseEntity<?> CobrarAlquiler()
+		{
+			int x = alquilerService.CobrarAlquiler();
+			return ResponseEntity.ok().build();
+		}
+		
 	//metodo para crear
 		@PostMapping
 		public ResponseEntity<?> crear(@RequestBody AlquilerDto alquiler)

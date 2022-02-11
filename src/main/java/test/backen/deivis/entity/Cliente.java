@@ -14,6 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 
 @Entity
@@ -45,39 +50,51 @@ public class Cliente implements Serializable {
 	@Column(length = 10)
 	private String ndni;
 	
-	@Column(length = 10)
-	private String fechan;
+	@Temporal(TemporalType.DATE )
+	@DateTimeFormat(iso = ISO.DATE)
+	@Column(name="fechan")
+	private Date fechan;
 	
-	@Column(length = 10)
-	private String fechai;
+	@Temporal(TemporalType.DATE )
+	@DateTimeFormat(iso = ISO.DATE)
+	@Column(name="fechai")
+	private Date fechai;
 	
 	private Boolean estado; //1-activo 0-inactivo
 	
 		
-	@OneToMany(mappedBy = "cliente", fetch= FetchType.LAZY)
+	@OneToMany(mappedBy = "cliente")
     private List<Alquiler> alquileres;
 	
-	/*@OneToMany(mappedBy = "cliente")
-    private List<Sancion> sanciones;
-	*/
+
 	/////////////////////////////////////////////////////
 	
-	
-	
-
 	public String getNombre() {
 		return nombre;
 	}
 
-	
+	public Date getFechai() {
+		return fechai;
+	}
 
-	
+	public void setFechai(Date fechai) {
+		this.fechai = fechai;
+	}
+
+
+	public Date getFechan() {
+		return fechan;
+	}
+
+
+	public void setFechan(Date fechan) {
+		this.fechan = fechan;
+	}
+
 
 	public Long getCodcli() {
 		return codcli;
 	}
-
-
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -123,22 +140,6 @@ public class Cliente implements Serializable {
 		this.ndni = ndni;
 	}
 
-	public String getFechan() {
-		return fechan;
-	}
-
-	public void setFechan(String fechan) {
-		this.fechan = fechan;
-	}
-
-	public String getFechai() {
-		return fechai;
-	}
-
-	public void setFechai(String fechai) {
-		this.fechai = fechai;
-	}
-
 	public Boolean getEstado() {
 		return estado;
 	}
@@ -146,11 +147,5 @@ public class Cliente implements Serializable {
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
-	
-	
-	
-	
-	
-	
 
 }

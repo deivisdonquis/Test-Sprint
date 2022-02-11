@@ -8,6 +8,8 @@ import test.backen.deivis.entity.Alquiler;
 
 public interface AlquilerService {
 	
+	public int CobrarAlquiler();
+	
 	public Iterable<Alquiler> findAll(); 	//listar 
 	
 	public Page<Alquiler> findAll(Pageable pageable); //listar paginada

@@ -4,6 +4,7 @@ package test.backen.deivis.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name="detallealquiler")
@@ -23,57 +29,41 @@ public class DetalleAlquiler implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long item;
 	
+	
 	private Integer diasprestamo;
 	
-	private String fechadev;
+	@Temporal(TemporalType.DATE )
+	@DateTimeFormat(iso = ISO.DATE)
+	@Column(name="fechadev")
+	private Date fechadev;
 	
-	private Long codalq;
-	private Long codcd;
+
+	//private Long codcd;
 	
 	
-	//@ManyToOne(fetch= FetchType.LAZY )
-    //@JoinColumn(name = "codalq", nullable = false)
-    //private Alquiler alquiler;
+	@ManyToOne
+    @JoinColumn(name = "codalq")
+    private Alquiler alquiler;
+	
+	
+	@ManyToOne
+    @JoinColumn(name = "codcd", nullable=false )
+    private Cd cd;
     
 	
-	    
-     
-     public Long getCodcd() {
-		return codcd;
-	}
-
-
-	public void setCodcd(Long codcd) {
-		this.codcd = codcd;
-	}
-
-
 	public DetalleAlquiler() {
 		super();
 	}
 
-	
-	
-
-	public DetalleAlquiler(Integer diasprestamo, String fechadev, Long codalq, Long codcd) {
+	public DetalleAlquiler(Integer diasprestamo, Date fechadev, Alquiler alquiler, Cd cd) {
 		super();
 		this.diasprestamo = diasprestamo;
 		this.fechadev = fechadev;
-		this.codalq = codalq;
-		this.codcd = codcd;
+		this.alquiler = alquiler;
+		this.cd = cd;
 	}
 
 
-	/*
-	
-	@ManyToOne
-    @JoinColumn(name = "codcd", nullable = false, updatable = false)
-    private Cd cd;*/
-	
-	
-	
-	/////////////////////////////////
-	/*
 	public Cd getCd() {
 		return cd;
 	}
@@ -81,19 +71,37 @@ public class DetalleAlquiler implements Serializable {
 	public void setCd(Cd cd) {
 		this.cd = cd;
 	}
-	*/
+
+
+
+
+
+
+
+
+	public void setAlquiler(Alquiler alquiler) {
+		this.alquiler = alquiler;
+	}
+
+
+
+
+
+
+
+
 	
 	
 
 
-	public Long getCodalq() {
-		return codalq;
-	}
 
+	
+	
+	
+	
+	
+	
 
-	public void setCodalq(Long codalq) {
-		this.codalq = codalq;
-	}
 
 
 	public Long getItem() {
@@ -113,11 +121,11 @@ public class DetalleAlquiler implements Serializable {
 		this.diasprestamo = diasprestamo;
 	}
 
-	public String getFechadev() {
+	public Date getFechadev() {
 		return fechadev;
 	}
 
-	public void setFechadev(String fechadev) {
+	public void setFechadev(Date fechadev) {
 		this.fechadev = fechadev;
 	}
 
